@@ -1,26 +1,143 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import "tw-animate-css";
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-manrope: var(--brand-font);
+  /* Colors */
+  --color-primary: oklch(0.705 0.213 47.604);
+  /* color-orange-500 */
+  /* color-amber-500 */
+  /* --color-secondary: var(--brand-secondary); */
+  --color-secondary: oklch(0.208 0.042 265.755);
+  /* --color-paragraph: #333333; */
+  --color-paragraph: var(--color-slate-800);
+  /* --color-accent: #ff8c00; color hovering */
+  --color-goldenrod: var(--color-amber-700);
+  --color-title-bold: #16243d;
+
+  /* Container */
+  --container-padding: var(--brand-container-padding);
+  --container-max-w: var(--brand-container-max-w);
+
+  /* Breakpoints */
+  /* --breakpoint-sm: var(--brand-breakpoint-sm);
+  --breakpoint-md: var(--brand-breakpoint-md);
+  --breakpoint-lg: var(--brand-breakpoint-lg);
+  --breakpoint-xl: var(--brand-breakpoint-xl); */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  /* Brand Colors */
+  /* --brand-primary: var(--color-amber-500); Golden Orange */
+  --brand-secondary: #0f3460; /* Dark Navy Blue */
+  /* Font */
+  --brand-font: "Manrope", sans-serif;
+
+  /* Container */
+  --brand-container-padding: 2rem;
+  --brand-container-max-w: 1280px;
+
+  /* Breakpoints */
+  /* --brand-breakpoint-sm: 640px;
+  --brand-breakpoint-md: 768px;
+  --brand-breakpoint-lg: 1024px;
+  --brand-breakpoint-xl: 1280px; */
+}
+
+@layer base {
+  body {
+    @apply bg-white;
+  }
+  .container {
+    @apply mx-auto py-2 px-4 md:px-6;
+  }
+  .bg-blue-gradaiant {
+    background-image: linear-gradient(to right, #3586c5, #11396a);
+    /* bg-linear-to-r from-[#3586C5] to-[#11396A] */
+  }
+  .section_margin {
+    /* margin-top: 100px; */
+    @apply mt-15 md:mt-20 lg:mt-25;
+  }
+  .section_padding {
+    @apply py-15 md:py-20 lg:py-25;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply leading-tight;
+  }
+  p {
+    @apply text-base text-paragraph leading-relaxed;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* 
+@import "tailwindcss";
+
+@theme {
+  --color-backgroundClr: #fff;
+  --color-foregroundClr: #333;
+  --color-primary-100: #dfdcff;
+  --color-primary-200: #beb9ff;
+  --color-primary-300: #9e95ff;
+  --color-primary-400: #7d72ff;
+  --color-primary-500: #5d4fff;
+  --color-primary-600: #4a3fcc;
+  --color-primary-700: #382f99;
+  --color-primary-800: #252066;
+  --color-primary-900: #131033;
 }
+
+body {
+  @apply bg-backgroundClr text-foregroundClr;
+}
+
+@layer utilities {
+  .container {
+    @apply max-w-[1258px] mx-auto px-4 sm:px-8 md:px-12 lg:px-16;
+  }
+  button {
+    @apply cursor-pointer;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply leading-[1.2];
+  }
+  p {
+    @apply leading-relaxed;
+  }
+  .subtitle {
+    @apply text-primary-700;
+  }
+  .section {
+    @apply pt-28;
+  }
+  .title {
+    @apply text-2xl md:text-4xl font-semibold;
+  }
+  .card-title {
+    @apply text-xl font-bold lg:text-[22px];
+  }
+  input,
+  textarea {
+    @apply outline-none;
+  }
+}
+
+@layer components {
+  .primary-btn {
+    @apply bg-primary-500 hover:bg-primary-700 focus:bg-primary-700 transition-colors text-white px-8 py-4 lg:py-[16px]  lg:px-10 rounded-md;
+  }
+  .secondary-btn {
+    @apply bg-primary-100/50 hover:bg-primary-500 hover:text-white border focus:bg-primary-500 border-primary-200 transition-colors px-8 py-4 lg:py-[16px]  lg:px-10 rounded-md;
+  }
+} */
