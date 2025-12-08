@@ -13,7 +13,7 @@ export interface AboutData {
 export function AboutContent({ msg }: { msg: AboutData }) {
   // Construct Image URL
   const imageUrl = msg.image
-    ? `https://erp.sonalilife.com/Utilities/AboutUsImg/${msg.image}`
+    ? `https://erp.sonalilife.com/Images/${msg.image}`
     : "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1000";
 
   return (
@@ -30,7 +30,7 @@ export function AboutContent({ msg }: { msg: AboutData }) {
                 src={imageUrl}
                 alt={msg.title || "About Sonali Life"}
                 fill
-                className="object-cover scale-105 transition-transform duration-700 group-hover:scale-110"
+                className="object-contain scale-105 transition-transform duration-700 group-hover:scale-110"
                 unoptimized
               />
               {/* Subtle overlay for better text contrast if needed, and premium feel */}
