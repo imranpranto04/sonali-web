@@ -8,10 +8,19 @@
 
   --font-bengali: var(--font-bengali), sans-serif;
   /* Colors */
+  --color-brand: #111240;
+  --color-brand-hover: #1a1c5e;
+  /* Optional: Add variants if needed */
+  --color-brand-dark: #0a0b2e;
+  --color-brand-light: #232560;
+  /* 2. GOLD: Map it to Tailwind's Amber Palette */
+  /* This says: "My brand gold is actually Tailwind Amber 500" */
+  --color-gold: var(--color-amber-500);
+  --color-gold-hover: var(--color-amber-600);
+  --color-gold-light: var(--color-amber-50);
+
   --color-primary: oklch(0.705 0.213 47.604);
-  /* color-orange-500 */
-  /* color-amber-500 */
-  /* --color-secondary: var(--brand-secondary); */
+
   --color-secondary: oklch(0.208 0.042 265.755);
   /* --color-paragraph: #333333; */
   --color-paragraph: var(--color-slate-800);

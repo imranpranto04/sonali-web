@@ -1,15 +1,16 @@
 import { Mail, MapPin, Phone, Sprout } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 
 const Footer = () => {
   return (
     <>
-      <footer className="bg-slate-900 text-slate-300 pt-20 pb-10 border-t border-slate-950 relative overflow-hidden section_margin">
+      <footer className="bg-brand text-slate-300 pt-20 pb-10 border-t border-slate-950 relative overflow-hidden section_margin">
         {/* Background Decor */}
         <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-orange-600 via-amber-500 to-orange-600"></div>
-        <div className="absolute -top-24 -left-24 w-96 h-96 bg-orange-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-orange-500/10 rounded-full blur-[100px] pointer-events-none"></div>
 
         <div className="container relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
@@ -22,12 +23,14 @@ const Footer = () => {
                 <span className="text-2xl font-extrabold text-white tracking-tight">
                   Sonali<span className="text-orange-500">Life</span>
                 </span> */}
-                <Image
-                  src="/logo.png"
-                  alt="Sonali Life"
-                  width={250}
-                  height={55}
-                />
+                <Link href="/">
+                  <Image
+                    src="/logo-new-eng.png"
+                    alt="Sonali Life"
+                    width={250}
+                    height={55}
+                  />
+                </Link>
               </div>
               <p className="text-slate-400 text-sm leading-relaxed">
                 Trust, Transparency, and Technology. Building a secure future

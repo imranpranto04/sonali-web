@@ -8,22 +8,6 @@ import Footer from "@/components/common/Footer";
 import { Header } from "@/components/layout/Header";
 // import Topbar from "@/components/layout/Topbar";
 
-// const manrope = Manrope({
-//   subsets: ["latin"],
-//   weight: ["400", "500", "600", "700"],
-//   display: "swap",
-// });
-
-// const oswald = Oswald({
-//   // variable: "--font-manrope",
-//   subsets: ["latin"],
-// });
-
-// export const metadata: Metadata = {
-//   title: "Sonali Life Insurancep",
-//   description: "Secure with Sonali Life Insurance.",
-// };
-
 export default function PublicLayout({
   children,
 }: Readonly<{
@@ -31,15 +15,12 @@ export default function PublicLayout({
 }>) {
   return (
     <>
-      {/* <Topbar /> */}
-      {/* <Topbar /> */}
-
       {/* Premiun Navbar + Topbar */}
       {/* <Navbar /> */}
       <Header />
       {/* !Premiun Navbar + Topbar */}
 
-      <main className="min-h-screen mt-48">{children}</main>
+      <main className="min-h-screen mt-45">{children}</main>
 
       <footer>
         <Footer />

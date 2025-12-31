@@ -22,7 +22,7 @@ export default function HomePage() {
         <WhyPreferUs />
         <AwardSection />
         <Testimonials />
-        <PartnerSection />
+        {/* <PartnerSection /> */}
         <FAQ />
         <MobileApp />
         <ContactUs />
