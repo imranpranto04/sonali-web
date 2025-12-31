@@ -15,7 +15,12 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "erp.sonalilife.com",
+        pathname: "/**", // Allow all paths under this domain
       },
+      // {
+      //   protocol: "https",
+      //   hostname: "erp.sonalilife.com",
+      // },
     ],
   },
   // !new for image

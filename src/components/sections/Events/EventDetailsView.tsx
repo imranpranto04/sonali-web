@@ -6,9 +6,7 @@ import { Calendar, ArrowLeft, Clock } from "lucide-react";
 import { useLangStore } from "@/store/lang-store";
 import { usePublicContent } from "@/hooks/use-public-content";
 
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { EventItem } from "./EventCard";
 import { ShareButton } from "@/components/common/ShareButton";
@@ -28,53 +26,41 @@ export default function EventDetailsView({
   const { lang } = useLangStore();
 
   // 1. Fetch Dynamic Data (Client-Side)
-  // Only fetches if language changes (managed by the hook's queryKey)
-  // We pass the specific payload required by the API
+  // The hook automatically re-fetches when 'lang' changes because 'lang' is in the queryKey (in your hook definition)
   const { data: dynamicEventList, isLoading: isEventLoading } =
-    usePublicContent<EventItem[]>("event", {
+    usePublicContent<EventItem>("event", {
       searchfor: "id",
       text: "",
       searchid: eventId,
     });
 
-  const { data: dynamicRecent, isLoading: isRecentLoading } = usePublicContent<
-    EventItem[]
-  >("event", {
-    searchfor: "recent",
-    text: "",
-    searchid: 0,
-  });
+  const { data: dynamicRecent, isLoading: isRecentLoading } =
+    usePublicContent<EventItem>("event", {
+      searchfor: "recent",
+      text: "",
+      searchid: 0,
+    });
 
   // 2. Determine Data to Show
-  // If Bengali is active, use client data. If English, use Server data (initial props).
+  // Logic:
+  // - If Client Data exists (dynamicEventList), use it.
+  // - If Client Data is loading or undefined, fall back to Server Data (initialEvent).
+  // - This prevents the screen from going blank if English has data but Bengali doesn't.
+
   const event =
-    lang === "bng" && dynamicEventList && dynamicEventList.length > 0
+    dynamicEventList && dynamicEventList.length > 0
       ? dynamicEventList[0]
       : initialEvent;
 
   const recentEvents =
-    lang === "bng" && dynamicRecent ? dynamicRecent : initialRecent;
+    dynamicRecent && dynamicRecent.length > 0 ? dynamicRecent : initialRecent;
 
-  const isLoading = lang === "bng" && (isEventLoading || isRecentLoading);
-
-  // 3. Loading State (Only shows when switching languages)
-  if (isLoading) {
+  // 3. Loading Skeleton (Only during active transition)
+  if (isEventLoading && !dynamicEventList) {
     return <EventDetailsSkeleton />;
   }
 
-  if (!event)
-    return (
-      <div className="min-h-[50vh] flex flex-col items-center justify-center text-center">
-        <h2 className="text-xl font-bold text-slate-800">Event not found</h2>
-        <Link
-          href="/company/events"
-          className="mt-4 text-orange-600 hover:underline"
-        >
-          Back to Events
-        </Link>
-      </div>
-    );
-
+  // 4. Safe Image URL
   const imageUrl = event.image
     ? `https://erp.sonalilife.com/Utilities/EventImg/${event.image}`
     : "https://images.unsplash.com/photo-1540575467063-178a50c2df87";
@@ -89,7 +75,7 @@ export default function EventDetailsView({
               href="/company/events"
               className="inline-flex items-center text-slate-500 hover:text-orange-600 mb-6 transition-colors font-bold text-xs uppercase tracking-wider"
             >
-              <ArrowLeft className="w-4 h-4 mr-2" />{" "}
+              <ArrowLeft className="w-4 h-4 mr-2" />
               {lang === "bng" ? "ইভেন্ট পেজে ফিরে যান" : "Back to Events"}
             </Link>
 
@@ -114,7 +100,7 @@ export default function EventDetailsView({
                     {lang === "bng" ? "খবর ও ইভেন্ট" : "News & Events"}
                   </Badge>
                   <div className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider">
-                    <Calendar className="w-4 h-4 text-orange-500" />{" "}
+                    <Calendar className="w-4 h-4 text-orange-500" />
                     {event.date}
                   </div>
                 </div>
@@ -125,15 +111,8 @@ export default function EventDetailsView({
 
                 <div className="h-px w-full bg-slate-100 mb-8"></div>
 
-                <div className="prose prose-lg text-slate-600 leading-loose max-w-none text-justify font-sans">
-                  {event.details.split("\n").map(
-                    (para, i) =>
-                      para.trim() && (
-                        <p key={i} className="mb-4">
-                          {para}
-                        </p>
-                      )
-                  )}
+                <div className="prose prose-lg text-slate-600 leading-loose max-w-none text-justify font-sans whitespace-pre-line">
+                  {event.details}
                 </div>
               </div>
 
@@ -166,7 +145,7 @@ export default function EventDetailsView({
 
                 {recentEvents.length === 0 && (
                   <p className="text-slate-400 text-sm italic p-2">
-                    No other recent events.
+                    No recent events found.
                   </p>
                 )}
               </div>

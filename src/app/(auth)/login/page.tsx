@@ -1,14 +1,15 @@
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation"; // Import useRouter
 import { AuthBanner } from "@/components/auth/AuthBanner";
 import { LoginForm } from "@/components/auth/LoginForm";
 
 function LoginContent() {
   const searchParams = useSearchParams();
+  const router = useRouter(); // Initialize Router
 
-  // 1. Check URL for 'agent' or 'policyholder'
+  // 1. Get initial type from URL, default to 'policyholder'
   const initialType =
     searchParams.get("type") === "agent" ? "agent" : "policyholder";
 
@@ -17,16 +18,20 @@ function LoginContent() {
   );
   const [isAnimating, setIsAnimating] = useState(false);
 
-  // 2. Sync if URL changes
+  // 2. Sync State if URL changes (e.g. Back Button or Logout Redirect)
   useEffect(() => {
     setUserType(initialType);
   }, [initialType]);
 
-  // 3. Handle the switch
+  // 3. Handle the switch (FIXED: Updates URL)
   const handleSwitch = (type: "policyholder" | "agent") => {
     if (type === userType) return;
 
     setIsAnimating(true);
+
+    // Update URL immediately so if page reloads, it stays on this tab
+    router.replace(`/login?type=${type}`, { scroll: false });
+
     setTimeout(() => {
       setUserType(type);
       setIsAnimating(false);
@@ -43,7 +48,7 @@ function LoginContent() {
     <div className="grow flex items-center justify-center p-4 md:p-8 relative overflow-hidden pt-[100px]">
       {/* Top Border Color */}
       <div
-        className={`absolute top-0 left-0 w-full h-1.5 bg-linear-to-r transition-colors duration-500 ${gradientClass}`}
+        className={`absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r transition-colors duration-500 ${gradientClass}`}
       />
 
       {/* Card Container */}
@@ -65,7 +70,7 @@ export default function LoginPage() {
     <div className="min-h-screen w-full bg-slate-50 font-sans flex flex-col">
       <Suspense
         fallback={
-          <div className="flex h-screen items-center justify-center">
+          <div className="flex h-screen items-center justify-center text-slate-400">
             Loading...
           </div>
         }

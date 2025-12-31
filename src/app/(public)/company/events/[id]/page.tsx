@@ -204,29 +204,118 @@
 //   );
 // }
 
+// import { Metadata } from "next";
+// import Link from "next/link";
+// import { Button } from "@/components/ui/button";
+// import { fetchPublicContent } from "@/lib/api/api-server-public";
+// import { EventItem } from "@/components/sections/Events/EventCard";
+// import EventDetailsView from "@/components/sections/Events/EventDetailsView";
+
+// // --- Data Fetchers (Server Side) ---
+
+// async function getEventDetails(id: number): Promise<EventItem | undefined> {
+//   const events = await fetchPublicContent<EventItem>("event", {
+//     searchfor: "id",
+//     text: "",
+//     searchid: id,
+//   });
+//   return events.length > 0 ? events[0] : undefined;
+// }
+
+// async function getRecentEvents(): Promise<EventItem[]> {
+//   return await fetchPublicContent<EventItem>("event", {
+//     searchfor: "recent",
+//     text: "",
+//     searchid: 0,
+//   });
+// }
+
+// // --- SEO Metadata ---
+// export async function generateMetadata({
+//   params,
+// }: {
+//   params: Promise<{ id: string }>;
+// }): Promise<Metadata> {
+//   const { id } = await params;
+//   const event = await getEventDetails(Number(id));
+//   return {
+//     title: event ? `${event.title} | Sonali Life` : "Event Details",
+//     description: event ? event.details.substring(0, 160) : "Event details",
+//   };
+// }
+
+// // --- Main Page Component ---
+// export default async function EventDetailsPage({
+//   params,
+// }: {
+//   params: Promise<{ id: string }>;
+// }) {
+//   const { id } = await params;
+//   const eventId = Number(id);
+
+//   // Fetch initial data in parallel
+//   const [event, recentEvents] = await Promise.all([
+//     getEventDetails(eventId),
+//     getRecentEvents(),
+//   ]);
+
+//   // Handle 404 Case
+//   if (!event)
+//     return (
+//       <div className="min-h-[60vh] flex flex-col items-center justify-center pt-24">
+//         <h2 className="text-2xl font-bold text-slate-800">Event not found</h2>
+//         <p className="text-slate-500 mb-6">
+//           The event you are looking for might have been removed.
+//         </p>
+//         <Link href="/company/events">
+//           <Button>Back to Events</Button>
+//         </Link>
+//       </div>
+//     );
+
+//   // Pass data to the Client Component for display & language switching
+//   return (
+//     <EventDetailsView
+//       initialEvent={event}
+//       initialRecent={recentEvents}
+//       eventId={eventId}
+//     />
+//   );
+// }
+
 import { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { fetchPublicContent } from "@/lib/api/api-server-public";
 import { EventItem } from "@/components/sections/Events/EventCard";
 import EventDetailsView from "@/components/sections/Events/EventDetailsView";
+import { ArrowLeft } from "lucide-react";
 
-// --- Data Fetchers (Server Side) ---
+// --- Data Fetchers ---
 
+// FIX: "Smart Fetch" - Tries English, fails over to Bengali
 async function getEventDetails(id: number): Promise<EventItem | undefined> {
-  const events = await fetchPublicContent<EventItem>("event", {
-    searchfor: "id",
-    text: "",
-    searchid: id,
+  // 1. Try English
+  let events = await fetchPublicContent<EventItem>("event", {
+    method: "POST",
+    body: { lang: "eng", searchfor: "id", text: "", searchid: id },
   });
+
+  // 2. If not found, Try Bengali
+  if (!events || events.length === 0) {
+    events = await fetchPublicContent<EventItem>("event", {
+      method: "POST",
+      body: { lang: "bng", searchfor: "id", text: "", searchid: id },
+    });
+  }
+
   return events.length > 0 ? events[0] : undefined;
 }
 
 async function getRecentEvents(): Promise<EventItem[]> {
   return await fetchPublicContent<EventItem>("event", {
-    searchfor: "recent",
-    text: "",
-    searchid: 0,
+    method: "POST",
+    body: { lang: "eng", searchfor: "recent", text: "", searchid: 0 },
   });
 }
 
@@ -253,7 +342,6 @@ export default async function EventDetailsPage({
   const { id } = await params;
   const eventId = Number(id);
 
-  // Fetch initial data in parallel
   const [event, recentEvents] = await Promise.all([
     getEventDetails(eventId),
     getRecentEvents(),
@@ -262,18 +350,19 @@ export default async function EventDetailsPage({
   // Handle 404 Case
   if (!event)
     return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center pt-24">
+      <div className="min-h-[60vh] flex flex-col items-center justify-center pt-24 bg-slate-50">
         <h2 className="text-2xl font-bold text-slate-800">Event not found</h2>
         <p className="text-slate-500 mb-6">
           The event you are looking for might have been removed.
         </p>
         <Link href="/company/events">
-          <Button>Back to Events</Button>
+          <Button variant="outline">
+            <ArrowLeft className="w-4 h-4 mr-2" /> Back to Events
+          </Button>
         </Link>
       </div>
     );
 
-  // Pass data to the Client Component for display & language switching
   return (
     <EventDetailsView
       initialEvent={event}

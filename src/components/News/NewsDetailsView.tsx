@@ -5,12 +5,10 @@ import Link from "next/link";
 import { Calendar, ArrowLeft, Clock, Newspaper } from "lucide-react";
 import { useLangStore } from "@/store/lang-store";
 import { usePublicContent } from "@/hooks/use-public-content";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { NewsItem } from "./NewsCard";
-import { ShareButton } from "../common/ShareButton";
+import { ShareButton } from "@/components/common/ShareButton";
 import { SidebarNewsCard } from "./SidebarNewsCard";
 
 interface NewsDetailsViewProps {
@@ -26,52 +24,39 @@ export default function NewsDetailsView({
 }: NewsDetailsViewProps) {
   const { lang } = useLangStore();
 
-  // 1. Fetch Dynamic Data (Client-Side for Bengali)
-  const { data: dynamicNewsList, isLoading: isNewsLoading } = usePublicContent<
-    NewsItem[]
-  >("news", {
-    searchfor: "id",
-    text: "",
-    searchid: newsId,
-  });
+  // 1. Fetch Dynamic Data (Client-Side)
+  // Re-fetches automatically when 'lang' changes
+  const { data: dynamicNewsList, isLoading: isNewsLoading } =
+    usePublicContent<NewsItem>("news", {
+      searchfor: "id",
+      text: "",
+      searchid: newsId,
+    });
 
-  const { data: dynamicRecent, isLoading: isRecentLoading } = usePublicContent<
-    NewsItem[]
-  >("news", {
-    searchfor: "recent",
-    text: "",
-    searchid: 0,
-  });
+  const { data: dynamicRecent, isLoading: isRecentLoading } =
+    usePublicContent<NewsItem>("news", {
+      searchfor: "recent",
+      text: "",
+      searchid: 0,
+    });
 
   // 2. Determine Data to Show
+  // Logic: Prefer Client Data if available. Fallback to Server Data.
   const news =
-    lang === "bng" && dynamicNewsList && dynamicNewsList.length > 0
+    dynamicNewsList && dynamicNewsList.length > 0
       ? dynamicNewsList[0]
       : initialNews;
 
   const recentNews =
-    lang === "bng" && dynamicRecent ? dynamicRecent : initialRecent;
-
-  const isLoading = lang === "bng" && (isNewsLoading || isRecentLoading);
+    dynamicRecent && dynamicRecent.length > 0 ? dynamicRecent : initialRecent;
 
   // 3. Loading State
-  if (isLoading) {
+  // Only show skeleton if we are waiting for new data and don't have the current data
+  if (isNewsLoading && !dynamicNewsList) {
     return <NewsDetailsSkeleton />;
   }
 
-  if (!news)
-    return (
-      <div className="min-h-[50vh] flex flex-col items-center justify-center text-center">
-        <h2 className="text-xl font-bold text-slate-800">News not found</h2>
-        <Link
-          href="/company/news"
-          className="mt-4 text-orange-600 hover:underline"
-        >
-          Back to News
-        </Link>
-      </div>
-    );
-
+  // 4. Safe Image URL
   const imageUrl = news.image
     ? `https://erp.sonalilife.com/Utilities/EventImg/${news.image}`
     : "https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=1000";
@@ -86,7 +71,7 @@ export default function NewsDetailsView({
               href="/company/news"
               className="inline-flex items-center text-slate-500 hover:text-orange-600 mb-6 transition-colors font-bold text-xs uppercase tracking-wider"
             >
-              <ArrowLeft className="w-4 h-4 mr-2" />{" "}
+              <ArrowLeft className="w-4 h-4 mr-2" />
               {lang === "bng" ? "নিউজ পেজে ফিরে যান" : "Back to News"}
             </Link>
 
@@ -98,6 +83,7 @@ export default function NewsDetailsView({
                   fill
                   className="object-contain bg-black/5"
                   unoptimized
+                  priority
                 />
               </div>
 
@@ -110,7 +96,8 @@ export default function NewsDetailsView({
                     {lang === "bng" ? "খবর" : "Latest News"}
                   </Badge>
                   <div className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider">
-                    <Calendar className="w-4 h-4 text-orange-500" /> {news.date}
+                    <Calendar className="w-4 h-4 text-orange-500" />
+                    {news.date}
                   </div>
                 </div>
 
@@ -120,15 +107,8 @@ export default function NewsDetailsView({
 
                 <div className="h-px w-full bg-slate-100 mb-8"></div>
 
-                <div className="prose prose-lg text-slate-600 leading-loose max-w-none text-justify font-sans">
-                  {news.details.split("\n").map(
-                    (para, i) =>
-                      para.trim() && (
-                        <p key={i} className="mb-4">
-                          {para}
-                        </p>
-                      )
-                  )}
+                <div className="prose prose-lg text-slate-600 leading-loose max-w-none text-justify font-sans whitespace-pre-line">
+                  {news.details}
                 </div>
               </div>
 
@@ -161,7 +141,7 @@ export default function NewsDetailsView({
 
                 {recentNews.length === 0 && (
                   <p className="text-slate-400 text-sm italic p-2">
-                    No other recent news.
+                    No recent news found.
                   </p>
                 )}
               </div>

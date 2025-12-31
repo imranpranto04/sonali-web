@@ -24,7 +24,7 @@ export function EventCard({ msg }: { msg: EventItem }) {
   return (
     // 2. Wrap everything in Link
     <Link
-      href={`/company/events/${msg.serialNo}`}
+      href={`/company/events/${msg.serialNo}`} // Ensure this says 'events' (plural)
       className="block h-full group"
     >
       <Card className="overflow-hidden border-none shadow-lg hover:shadow-2xl transition-all duration-300 bg-white rounded-2xl h-full flex flex-col cursor-pointer">

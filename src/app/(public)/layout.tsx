@@ -5,6 +5,7 @@
 import Navbar from "@/components/layout/Navbar/Navbar";
 // import Topbar from "@/components/layout/Topbar";
 import Footer from "@/components/common/Footer";
+import { Header } from "@/components/layout/Header";
 // import Topbar from "@/components/layout/Topbar";
 
 // const manrope = Manrope({
@@ -34,10 +35,11 @@ export default function PublicLayout({
       {/* <Topbar /> */}
 
       {/* Premiun Navbar + Topbar */}
-      <Navbar />
+      {/* <Navbar /> */}
+      <Header />
       {/* !Premiun Navbar + Topbar */}
 
-      <main className="min-h-screen mt-42">{children}</main>
+      <main className="min-h-screen mt-48">{children}</main>
 
       <footer>
         <Footer />

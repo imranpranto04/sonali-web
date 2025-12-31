@@ -1,6 +1,7 @@
 "use client";
 
-import { FileText, Calendar, Download } from "lucide-react";
+import Link from "next/link";
+import { FileText, Calendar, ExternalLink } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -9,17 +10,16 @@ export interface NoticeItem {
   title: string;
   details: string;
   date: string;
-  image: string; // Often a PDF link or image
+  image: string;
 }
 
-export function NoticeCard({ msg, index }: { msg: NoticeItem; index: number }) {
-  // Construct full URL for the file/image
-  const fileUrl = msg.image
-    ? `https://erp.sonalilife.com/Utilities/EventImg/${msg.image}`
-    : "#";
+export function NoticeCard({ msg }: { msg: NoticeItem }) {
+  // FIX: Link to our internal Details Page, NOT the ERP file directly.
+  // This allows the Details Page to handle the "Smart Fetch" (Eng -> Bng fallback)
+  const detailsUrl = `/company/notices/${msg.serialNo}`;
 
   return (
-    <Card className="hover:shadow-md transition-shadow border-slate-200 group overflow-hidden">
+    <Card className="hover:shadow-md transition-shadow border-slate-200 group overflow-hidden mb-4">
       <CardContent className="p-0 flex flex-col md:flex-row">
         {/* Date Box */}
         <div className="bg-slate-50 border-b md:border-b-0 md:border-r border-slate-100 p-6 flex flex-col items-center justify-center min-w-[120px] text-center">
@@ -32,6 +32,7 @@ export function NoticeCard({ msg, index }: { msg: NoticeItem; index: number }) {
           <h3 className="font-bold text-lg text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">
             {msg.title}
           </h3>
+
           {msg.details && (
             <p className="text-slate-500 text-sm mb-4 line-clamp-2">
               {msg.details}
@@ -39,15 +40,21 @@ export function NoticeCard({ msg, index }: { msg: NoticeItem; index: number }) {
           )}
 
           <div className="mt-auto pt-2">
-            <a href={fileUrl} target="_blank" rel="noopener noreferrer">
+            {/* Use Next.js Link for internal routing to the details page */}
+            <Link
+              href={detailsUrl}
+              target="_blank" // Opens in new tab
+              rel="noopener noreferrer" // Security best practice
+            >
               <Button
                 variant="outline"
                 size="sm"
-                className="gap-2 text-xs font-bold border-orange-200 text-orange-600 hover:text-orange-600 hover:bg-orange-100"
+                className="gap-2 text-xs font-bold border-orange-200 text-orange-600 hover:text-white hover:bg-orange-600"
               >
-                <Download className="w-3.5 h-3.5" /> Download / View
+                {/* Changed Icon to ExternalLink to signify opening a new view */}
+                <ExternalLink className="w-3.5 h-3.5" /> View Notice
               </Button>
-            </a>
+            </Link>
           </div>
         </div>
       </CardContent>

@@ -12,7 +12,7 @@ export function SidebarEventCard({ event }: { event: EventItem }) {
 
   return (
     <Link
-      href={`/company/events/${event.serialNo}`}
+      href={`/company/events/${event.serialNo}`} // Ensure this says 'events' (plural)
       className="group block mb-4"
     >
       <div className="flex gap-4 items-start p-3 rounded-xl hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-100">

@@ -2,7 +2,11 @@
 @import "tw-animate-css";
 
 @theme inline {
-  --font-manrope: var(--brand-font);
+  /* --font-manrope: var(--brand-font); */
+  --font-sans: var(--font-manrope), var(--font-bengali), ui-sans-serif,
+    system-ui, sans-serif;
+
+  --font-bengali: var(--font-bengali), sans-serif;
   /* Colors */
   --color-primary: oklch(0.705 0.213 47.604);
   /* color-orange-500 */
@@ -31,7 +35,8 @@
   /* --brand-primary: var(--color-amber-500); Golden Orange */
   --brand-secondary: #0f3460; /* Dark Navy Blue */
   /* Font */
-  --brand-font: "Manrope", sans-serif;
+  /* --font-manrope: "Manrope", sans-serif;
+  --font-bengali: "Noto Sans Bengali", sans-serif; */
 
   /* Container */
   --brand-container-padding: 2rem;
@@ -74,6 +79,16 @@
   p {
     @apply text-base text-paragraph leading-relaxed;
   }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 /* 

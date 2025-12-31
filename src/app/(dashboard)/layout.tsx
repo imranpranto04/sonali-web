@@ -4,8 +4,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/auth-store";
-import { DashboardTopbar } from "@/components/dashboard/Topbar";
 import { Sidebar } from "@/components/dashboard/Sidebar";
+import { DashboardTopbar } from "@/components/dashboard/DashboardTopbar";
 
 export default function DashboardLayout({
   children,

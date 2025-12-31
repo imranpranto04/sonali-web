@@ -13,7 +13,8 @@ import ContactUs from "@/components/common/ContactUs";
 export default function HomePage() {
   return (
     <>
-      <div className="mt-20 md:mt-32">
+      <div className="">
+        {/* <div className="mt-20 md:mt-32"> */}
         <Hero />
         <AboutCompany />
         <HomeProducts />

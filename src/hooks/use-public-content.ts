@@ -1,3 +1,73 @@
+// "use client";
+
+// import { useQuery } from "@tanstack/react-query";
+// import axios from "axios";
+// import { useLangStore } from "@/store/lang-store";
+
+// // --- Types for Different Content ---
+
+// export interface PublicMessage {
+//   name: string;
+//   designation: string;
+//   speech: string;
+//   image: string;
+// }
+
+// export interface NoticeItem {
+//   serialNo: number;
+//   title: string;
+//   details: string;
+//   date: string;
+//   image: string;
+// }
+
+// // Add more types as needed...
+
+// export type ContentType =
+//   | "messages"
+//   | "shariah"
+//   | "notice"
+//   | "board-of-directors"
+//   | "management-team"
+//   | "products"
+//   | "terms-and-conditions";
+
+// // Updated Fetcher Function
+// const fetchContent = async (
+//   type: ContentType,
+//   lang: "eng" | "bng",
+//   payload?: any
+// ) => {
+//   const endpoint = `https://www.sonalilife.com:1010/Api/Webdata/${type}`;
+
+//   try {
+//     // Merge language with any custom payload (e.g., searchfor, id)
+//     const body = { lang, ...payload };
+
+//     const { data } = await axios.post(endpoint, body);
+
+//     if (data.success === "true") {
+//       return data.data;
+//     }
+//     return null;
+//   } catch (error) {
+//     console.error(`Error fetching ${type}:`, error);
+//     return null;
+//   }
+// };
+
+// // --- THE UNIVERSAL HOOK ---
+// export const usePublicContent = <T = any>(type: ContentType, payload?: any) => {
+//   const { lang } = useLangStore();
+
+//   return useQuery({
+//     // Add payload to queryKey so it refetches if payload changes
+//     queryKey: ["public-content", type, lang, JSON.stringify(payload)],
+//     queryFn: () => fetchContent(type, lang, payload),
+//     staleTime: 1000 * 60 * 10, // Cache for 10 minutes
+//   });
+// };
+
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
@@ -5,7 +75,6 @@ import axios from "axios";
 import { useLangStore } from "@/store/lang-store";
 
 // --- Types for Different Content ---
-
 export interface PublicMessage {
   name: string;
   designation: string;
@@ -21,7 +90,7 @@ export interface NoticeItem {
   image: string;
 }
 
-// Add more types as needed...
+// You can keep adding types here...
 
 export type ContentType =
   | "messages"
@@ -30,9 +99,12 @@ export type ContentType =
   | "board-of-directors"
   | "management-team"
   | "products"
-  | "terms-and-conditions";
+  | "terms-and-conditions"
+  | "financials" // Added financials
+  | "event"
+  | "news";
 
-// Updated Fetcher Function
+// 1. Updated Fetcher Function
 const fetchContent = async (
   type: ContentType,
   lang: "eng" | "bng",
@@ -41,23 +113,31 @@ const fetchContent = async (
   const endpoint = `https://www.sonalilife.com:1010/Api/Webdata/${type}`;
 
   try {
-    // Merge language with any custom payload (e.g., searchfor, id)
+    // Merge language with any custom payload
     const body = { lang, ...payload };
 
     const { data } = await axios.post(endpoint, body);
 
-    if (data.success === "true") {
+    // FIX: Check for data.data existence to avoid passing undefined
+    if (data.success === "true" && data.data) {
       return data.data;
     }
-    return null;
+
+    // FIX: Return empty array instead of null/undefined to prevent React Query crash
+    return [];
   } catch (error) {
     console.error(`Error fetching ${type}:`, error);
-    return null;
+    return []; // Return empty array on error
   }
 };
 
 // --- THE UNIVERSAL HOOK ---
-export const usePublicContent = <T = any>(type: ContentType, payload?: any) => {
+export const usePublicContent = <T = any>(
+  type: ContentType,
+  payload?: any,
+  // FIX: Add options argument to support enabling/disabling
+  options: { enabled?: boolean } = {}
+) => {
   const { lang } = useLangStore();
 
   return useQuery({
@@ -65,5 +145,8 @@ export const usePublicContent = <T = any>(type: ContentType, payload?: any) => {
     queryKey: ["public-content", type, lang, JSON.stringify(payload)],
     queryFn: () => fetchContent(type, lang, payload),
     staleTime: 1000 * 60 * 10, // Cache for 10 minutes
+
+    // FIX: Pass the enabled option to useQuery
+    enabled: options.enabled,
   });
 };
