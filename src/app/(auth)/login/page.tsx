@@ -48,7 +48,7 @@ function LoginContent() {
     <div className="grow flex items-center justify-center p-4 md:p-8 relative overflow-hidden pt-[100px]">
       {/* Top Border Color */}
       <div
-        className={`absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r transition-colors duration-500 ${gradientClass}`}
+        className={`absolute top-0 left-0 w-full h-1.5 bg-linear-to-r transition-colors duration-500 ${gradientClass}`}
       />
 
       {/* Card Container */}

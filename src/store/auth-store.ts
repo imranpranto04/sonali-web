@@ -64,6 +64,7 @@ export interface User {
   role: "policyholder" | "agent";
   email?: string;
   phone?: string;
+  designation?: string; // <- add this line
 }
 
 interface AuthState {

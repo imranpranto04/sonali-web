@@ -71,7 +71,8 @@ const getStatusConfig = (colorCode: string) => {
 
 export default function AgentTeamPage() {
   const { user } = useAuthStore();
-  const myRank = user?.role === "agent" ? user?.designation || "UM" : "UM";
+  // const myRank = user?.role === "agent" ? user?.designation || "UM" : "UM";
+  const myRank = user?.role === "agent" ? user?.designation || "" : "";
 
   const [filters, setFilters] = useState<TeamParams>({
     searchValue: "",
