@@ -100,7 +100,9 @@ export type PublicEndpoint =
   | "officeinfo/management"
   | "news"
   | "event"
-  | "financials";
+  | "financials"
+  // | "officeinfo/secretaria"
+  | "formDownload";
 
 interface FetchOptions {
   body?: Record<string, any>;

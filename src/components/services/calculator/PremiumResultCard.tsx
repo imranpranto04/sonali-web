@@ -88,7 +88,7 @@ export function PremiumResultCard({
             </span>
             <div className="text-right">
               <span className="text-4xl md:text-5xl font-bold text-emerald-400 tracking-tight">
-                ৳ {result.lblCalculationValue}
+                ৳ {result.lblCalculationValue}৳{" "}
               </span>
               <p className="text-slate-400 text-xs mt-1">
                 Inclusive of all standard charges

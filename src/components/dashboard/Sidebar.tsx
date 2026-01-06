@@ -272,13 +272,13 @@ export function Sidebar({ onLinkClick }: SidebarProps) {
                 active={pathname === "/agent/policy-maturity"}
                 onClick={onLinkClick}
               />
-              <MenuLink
+              {/* <MenuLink
                 href="/agent/provident-fund"
                 icon={PiggyBank}
                 label="Provident Fund"
                 active={pathname === "/agent/provident-fund"}
                 onClick={onLinkClick}
-              />
+              /> */}
               <MenuLink
                 href="/agent/forwarding"
                 icon={Send}

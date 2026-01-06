@@ -23,7 +23,7 @@ export default function HomePage() {
         <AwardSection />
         <Testimonials />
         {/* <PartnerSection /> */}
-        <FAQ />
+        {/* <FAQ /> */}
         <MobileApp />
         <ContactUs />
       </div>

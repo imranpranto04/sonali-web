@@ -1704,7 +1704,8 @@ export default function AgentDashboard() {
             </h1>
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 mt-1 text-sm text-slate-500 font-medium">
               <span className="flex items-center gap-1.5">
-                <Briefcase className="w-3.5 h-3.5" /> {profile?.Designation}
+                <Briefcase className="w-3.5 h-3.5" />
+                {/* {profile?.Designation} */}
               </span>
               {/* <span className="w-1 h-1 bg-slate-300 rounded-full" /> */}
               <span>{profile?.AgentIdNo}</span>
