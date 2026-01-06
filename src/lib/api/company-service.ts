@@ -191,6 +191,13 @@ export type SuperstarData = {
   categories: SuperstarCategory[];
 };
 
+// --- MANAGEMENT TEAM TYPES ---
+export type ManagementMember = {
+  name: string;
+  designation: string;
+  image: string;
+};
+
 // download-form page
 
 export interface DownloadForm {
@@ -201,6 +208,30 @@ export interface DownloadForm {
   link?: string;
   fileName?: string;
 }
+
+// --- MANAGEMENT API ---
+export const getManagementTeam = async (): Promise<ManagementMember[]> => {
+  try {
+    // Fetch from: {{base_url}}/Webdata/officeinfo/management
+    const rawData = await fetchPublicContent<any>("officeinfo/management", {
+      method: "GET",
+    });
+
+    if (!rawData || !Array.isArray(rawData)) return [];
+
+    return rawData.map((item) => ({
+      name: item.name || "Name Not Available",
+      designation: item.designation || "",
+      // Construct full ERP path
+      image: item.image
+        ? `https://erp.sonalilife.com/PayRollUI/UploadEmpImage/${item.image}`
+        : "",
+    }));
+  } catch (error) {
+    console.error("Failed to fetch management team:", error);
+    return [];
+  }
+};
 
 // board-affairs
 
