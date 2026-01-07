@@ -80,7 +80,7 @@ export default function MetroAdminList({
         <AdminSkeleton />
       ) : showData.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {showData.map((member, idx) => (
+          {showData.map((member: MetroAdmin, idx: number) => (
             <AdminCard key={`${member.name}-${idx}`} member={member} />
           ))}
         </div>

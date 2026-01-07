@@ -248,7 +248,7 @@ export function DesktopNavItem() {
                 {/* ... (Keep existing dropdown content logic same as before) ... */}
                 {/* Just ensure text inside here is dark (slate-700) because background is white */}
 
-                {item.children.map((child, idx) => (
+                {item.children?.map((child, idx) => (
                   <Link
                     key={idx}
                     href={child.href}

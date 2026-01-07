@@ -24,7 +24,7 @@ export default function BoardAffairsList({
   initialData,
 }: BoardAffairsListProps) {
   // Fetch "all" and filter client-side for instant switching
-  const { data: apiData, isLoading } = usePublicContent<any>(
+  const { data: apiData, isLoading } = usePublicContent<BoardMember[]>(
     "officeinfo/secretaria",
     { searchfor: "all" }
   );
@@ -46,7 +46,7 @@ export default function BoardAffairsList({
 
   // 3. Filter & Sort (Leader First)
   const filteredMembers = useMemo(() => {
-    let members =
+    const members =
       activeTab === "All"
         ? allMembers
         : allMembers.filter((m) => m.DesignationName === activeTab);
@@ -129,7 +129,7 @@ function BoardMemberCard({ member }: { member: BoardMember }) {
     (lowerDesig.includes("secretary") && !lowerDesig.includes("deputy"));
 
   return (
-    <Card className="group overflow-hidden border-none shadow-sm hover:shadow-2xl hover:shadow-brand/10 transition-all duration-500 bg-white rounded-[1.5rem] h-full flex flex-col">
+    <Card className="group overflow-hidden border-none shadow-sm hover:shadow-2xl hover:shadow-brand/10 transition-all duration-500 bg-white rounded-3xl h-full flex flex-col">
       {/* Image Container */}
       <div className="relative h-80 w-full bg-slate-50 overflow-hidden">
         {imageUrl ? (

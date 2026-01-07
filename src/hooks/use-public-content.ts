@@ -98,11 +98,18 @@ export type ContentType =
   | "notice"
   | "board-of-directors"
   | "management-team"
-  | "products"
+  | "Products"
   | "terms-and-conditions"
-  | "financials" // Added financials
+  | "superstar"
+  | "officeinfo/management"
+  | "news"
   | "event"
-  | "news";
+  | "financials"
+  | "officeinfo/secretaria" // ✅ Added this
+  | "officeinfo/metroproject" // ✅ Added this
+  | "officeinfo/metroadmin" // 👈 ADD THIS LINE
+  | "formDownload"
+  | "aboutus";
 
 // 1. Updated Fetcher Function
 const fetchContent = async (

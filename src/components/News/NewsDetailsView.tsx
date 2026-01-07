@@ -133,9 +133,9 @@ export default function NewsDetailsView({
 
               <div className="flex flex-col gap-2">
                 {recentNews
-                  .filter((e) => e.serialNo !== news.serialNo)
+                  .filter((e: NewsItem) => e.serialNo !== news.serialNo)
                   .slice(0, 5)
-                  .map((item) => (
+                  .map((item: NewsItem) => (
                     <SidebarNewsCard key={item.serialNo} news={item} />
                   ))}
 

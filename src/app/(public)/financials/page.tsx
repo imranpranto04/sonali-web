@@ -53,7 +53,7 @@ export default async function FinancialsPage({ searchParams }: Props) {
       </section>
 
       {/* Main Content */}
-      <FinancialsClient data={data} />
+      <FinancialsClient data={data} lang="eng" />
     </div>
   );
 }

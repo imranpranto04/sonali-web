@@ -2,7 +2,7 @@
 
 import { NewsItem, NewsCard } from "@/components/News/NewsCard";
 import { usePublicContent } from "@/hooks/use-public-content";
-import { NewsSidebarItem } from "@/components/News/NewsSidebarItem"; // Assuming you have this or similar
+// import { NewsSidebarItem } from "@/components/News/NewsSidebarItem";
 import { Button } from "@/components/ui/button";
 import { Clock, ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -27,7 +27,7 @@ export default function NewsListView({ initialNews }: Props) {
       {/* LEFT COLUMN: Main Grid (8 cols) */}
       <div className="lg:col-span-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {data.map((item) => (
+          {data.map((item: NewsItem) => (
             <div key={item.serialNo} className="h-full">
               <NewsCard msg={item} />
             </div>
@@ -50,7 +50,7 @@ export default function NewsListView({ initialNews }: Props) {
           </div>
 
           <div className="space-y-4">
-            {data.slice(0, 5).map((item) => (
+            {data.slice(0, 5).map((item: NewsItem) => (
               // Simple Sidebar Item Design
               <div
                 key={item.serialNo}

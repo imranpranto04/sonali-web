@@ -245,10 +245,10 @@ export function ProfileSheet({
 
               {/* FIX: Added SheetDescription for accessibility (styled as role text) */}
               <SheetDescription className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-slate-500 font-medium">
-                <span className="flex items-center gap-1.5 text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">
+                {/* <span className="flex items-center gap-1.5 text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">
                   <Briefcase className="w-3.5 h-3.5" />
                   {profile.Designation}
-                </span>
+                </span> */}
                 <span className="flex items-center gap-1.5 pt-0.5">
                   <Fingerprint className="w-3.5 h-3.5 text-slate-400" />
                   ID:{" "}

@@ -28,7 +28,7 @@ export default function MessagesList() {
 
   return (
     <div className="space-y-40">
-      {messages.map((msg, index) => (
+      {messages.map((msg: PublicMessage, index: number) => (
         <MessageCard key={index} msg={msg} index={index} />
       ))}
     </div>

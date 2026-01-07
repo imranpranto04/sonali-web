@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import apiClient from "@/lib/api/api-client";
 
 // Define the shape of a single policy/business row
@@ -42,6 +42,6 @@ export const useBusinessList = (type: string) => {
     queryKey: ["agent-business", type], // Cache key includes the filter type
     queryFn: () => fetchBusinessList(type),
     staleTime: 5 * 60 * 1000, // Keep data fresh for 5 minutes
-    keepPreviousData: true, // specific for pagination/filtering UX
+    placeholderData: keepPreviousData, // specific for pagination/filtering UX
   });
 };

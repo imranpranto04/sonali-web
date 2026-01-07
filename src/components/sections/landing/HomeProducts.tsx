@@ -8,7 +8,7 @@ export default async function HomeProducts() {
   // 1. Fetch Real Data
   const products = await fetchPublicContent<ProductItem>("Products", {
     method: "GET",
-    next: { revalidate: 60 },
+    revalidate: 60,
   });
 
   // 2. Take only the first 3 items

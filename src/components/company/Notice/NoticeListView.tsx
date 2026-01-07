@@ -34,7 +34,7 @@ export default function NoticeListView({
 
   return (
     <div className="space-y-4">
-      {data.map((notice) => (
+      {data.map((notice: NoticeItem) => (
         <div
           key={notice.serialNo}
           className="bg-white p-5 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-all flex flex-col md:flex-row md:items-center gap-4"

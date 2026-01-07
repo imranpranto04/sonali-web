@@ -48,7 +48,7 @@ export function LoginDropdown() {
         className={cn(
           "relative overflow-hidden group border-0",
           // 1. Gradient Background (Gold to Orange)
-          "bg-gradient-to-r from-amber-400 to-orange-600",
+          "bg-linear-to-r from-amber-400 to-orange-600",
           // 2. Text & Layout
           "text-white font-bold rounded-full px-6 py-5 pl-5 pr-4",
           // 3. Shadow & Glow
@@ -58,7 +58,7 @@ export function LoginDropdown() {
         )}
       >
         {/* Shine Effect Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
+        <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
 
         <div className="flex items-center gap-2 relative z-10">
           <User className="w-4 h-4 fill-white/20" />

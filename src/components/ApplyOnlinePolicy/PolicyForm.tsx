@@ -47,7 +47,7 @@ const identitySchema = z.object({
   motherName: z.string().min(3, "Mother's name is required"),
   dob: z.string().min(1, "Date of Birth is required"),
   age: z.string(),
-  gender: z.enum(["Male", "Female"], { required_error: "Select gender" }),
+  // gender: z.enum(["Male", "Female"], { required_error: "Select gender" }),
   maritalStatus: z.string().min(1, "Select status"),
   spouseName: z.string().optional(),
   mobileNo: z.string().regex(/^01[3-9]\d{8}$/, "Invalid Mobile Number"),
@@ -70,7 +70,7 @@ export default function PolicyForm() {
       motherName: "",
       dob: "",
       age: "",
-      gender: "Male",
+      // gender: "Male",
       maritalStatus: "",
       spouseName: "",
       mobileNo: "",
@@ -229,7 +229,7 @@ export default function PolicyForm() {
                 />
 
                 {/* Gender & Marital Status */}
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="gender"
                   render={({ field }) => (
@@ -264,7 +264,7 @@ export default function PolicyForm() {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
 
                 <FormField
                   control={form.control}

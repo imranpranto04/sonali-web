@@ -207,6 +207,7 @@ export interface DownloadForm {
   linkName?: string;
   link?: string;
   fileName?: string;
+  pdfUrl: string;
 }
 
 // --- MANAGEMENT API ---
@@ -345,13 +346,17 @@ export const getDownloadForms = async (): Promise<DownloadForm[]> => {
     // 1. Fetch Data (GET method)
     const response = await fetchPublicContent<any>("formDownload", {
       method: "GET",
-      cache: "no-store",
+      revalidate: 0,
     });
 
     // 2. Safe Unwrap
     let dataList = [];
     if (Array.isArray(response)) dataList = response;
-    else if (response && Array.isArray(response.data)) dataList = response.data;
+    // else if (response && Array.isArray(response.data)) dataList = response.data;
+    // 👇 FIX: Cast (response as any) to stop the 'never' error
+    else if (response && Array.isArray((response as any).data)) {
+      dataList = (response as any).data;
+    }
 
     // 3. Normalize & Map
     return dataList.map((item: any) => {

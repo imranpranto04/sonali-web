@@ -137,9 +137,9 @@ export default function EventDetailsView({
 
               <div className="flex flex-col gap-2">
                 {recentEvents
-                  .filter((e) => e.serialNo !== event.serialNo)
+                  .filter((e: EventItem) => e.serialNo !== event.serialNo)
                   .slice(0, 5)
-                  .map((item) => (
+                  .map((item: EventItem) => (
                     <SidebarEventCard key={item.serialNo} event={item} />
                   ))}
 

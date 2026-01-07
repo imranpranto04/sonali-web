@@ -52,7 +52,8 @@
 import { Metadata } from "next";
 import { ShieldCheck } from "lucide-react";
 import { fetchPublicContent } from "@/lib/api/api-server-public";
-import ProductList, { ProductItem } from "@/components/products/ProductList";
+import ProductList from "@/components/products/ProductList";
+import { ProductItem } from "@/components/common/ProductCard";
 
 export const metadata: Metadata = {
   title: "Insurance Products | Sonali Life Insurance",
@@ -63,7 +64,7 @@ export default async function ProductsPage() {
   // Ensure your API handles caching correctly
   const products = await fetchPublicContent<ProductItem>("Products", {
     method: "GET",
-    next: { revalidate: 60 },
+    revalidate: 60,
   });
 
   return (

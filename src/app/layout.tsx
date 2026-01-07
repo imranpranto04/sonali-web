@@ -3,7 +3,7 @@ import { Manrope, Noto_Sans_Bengali } from "next/font/google";
 // import { Oswald } from "next/font/google";
 import "./globals.css";
 
-import Navbar from "@/components/layout/Navbar/Navbar";
+import { Navbar } from "@/components/layout/Navbar/Navbar";
 // import Topbar from "@/components/layout/Topbar";
 // import Footer from "@/components/common/Footer";
 import QueryProvider from "@/components/providers/QueryProvider";
