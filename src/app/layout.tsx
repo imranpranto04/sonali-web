@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Manrope, Noto_Sans_Bengali } from "next/font/google";
 // import { Oswald } from "next/font/google";
 import "./globals.css";
+import NextTopLoader from "nextjs-toploader"; // top-loader
 
 import { Navbar } from "@/components/layout/Navbar/Navbar";
 // import Topbar from "@/components/layout/Topbar";
@@ -48,7 +49,20 @@ export default function RootLayout({
         */}
 
         {/* Wrap the entire app in QueryProvider so useQuery works everywhere */}
-        <QueryProvider>{children}</QueryProvider>
+        <QueryProvider>
+          <NextTopLoader
+            color="#ea580c" // Brand Orange Color
+            initialPosition={0.08}
+            crawlSpeed={200}
+            height={3}
+            crawl={true}
+            showSpinner={false} // False looks cleaner (like GitHub)
+            easing="ease"
+            speed={200}
+            shadow="0 0 10px #ea580c,0 0 5px #ea580c"
+          />
+          {children}
+        </QueryProvider>
 
         {/* Add this line at the bottom. It renders the toast popups. */}
         <Toaster position="top-center" richColors />
